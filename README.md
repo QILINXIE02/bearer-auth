@@ -4,7 +4,7 @@
 
 -[Github action link](https://github.com/QILINXIE02/bearer-auth/actions)
 
--[PR to main]()
+-[PR to main](https://github.com/QILINXIE02/bearer-auth/pull/1)
 
 #### Description
 In this phase of the Authentication Server development, we implement Token (Bearer) Authentication.
