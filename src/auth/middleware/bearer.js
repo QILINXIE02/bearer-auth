@@ -1,22 +1,21 @@
 'use strict';
 
+const jwt = require('jsonwebtoken');
 const { users } = require('../models/index.js');
 
 module.exports = async (req, res, next) => {
   try {
-    if (!req.headers.authorization) { 
-      return res.status(401).send('Invalid Login');
-    }
+    const token = req.headers.authorization.split(' ')[1];
 
-    const token = req.headers.authorization.split(' ').pop();
+    const decodedToken = jwt.verify(token, process.env.SECRET, { algorithms: ['RS256'] });
+
     const validUser = await users.authenticateToken(token);
 
     req.user = validUser;
-    req.token = validUser.token;
-
+    req.token = token;
     next();
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error('Error verifying token:', error);
     res.status(403).send('Invalid Login');
   }
 };
